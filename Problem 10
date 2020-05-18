@@ -1,0 +1,17 @@
+import numpy as np
+import matplotlib.pyplot as plt
+file=open('New Text Document.txt','r')
+sample_data=np.loadtxt('New Text Document.txt', dtype=float)
+fig=plt.figure()
+plt.plot(sample_data)
+dft= np.fft.fft(sample_data)
+karr=np.fft.fftfreq(sample_data.size, d=1)
+fig = plt.figure()
+plt.plot(dft)
+spectra=abs(dft)*abs(dft)/(sample_data.size)
+fig = plt.figure()
+plt.plot(spectra)
+bin=10
+fig = plt.figure()
+plt.hist(spectra,bin, facecolor='blue')
+plt.show()
