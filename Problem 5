@@ -1,1 +1,33 @@
-
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+def dft(q, s):
+    wq= 0 + 1j*0
+    n= s.size
+    for p in range(n):
+        wq=wq+s[p]*np.exp(-1j*2*np.pi*q*p/n) #following equation 7 in lecture 16
+    return wq/(np.sqrt(n))
+N=4
+timedft=np.zeros(1)
+timefft=np.zeros(1)
+Narr=np.zeros(1)
+while(N<=100):
+     sample_data=np.arange(N)
+     dft_manual=np.zeros(N, dtype=complex)
+     timea= time.time()
+     for i in range(N):
+        dft_manual[i]= dft(i, sample_data)
+     timeb=time.time()
+     dft_np= np.fft.fft(sample_data)
+     timec= time.time()
+     if (N==4):
+        timedft[0] = timeb-timea
+        timefft[0] = timec-timeb
+        Narr[0]=N
+     else:
+        timedft= np.append(timedft, (timeb-timea))
+        timefft= np.append(timefft, (timec-timeb))
+        Narr= np.append(Narr, N)
+     N=N+1   
+plt.plot(Narr, timedft, color='b')
+plt.plot(Narr, timefft, color='r')
