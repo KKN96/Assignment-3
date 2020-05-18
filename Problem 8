@@ -7,13 +7,13 @@ xmin = -5.0
 xmax = 5.0
 ymin = -5.0
 ymax = 5.0
-nx = 128
-ny = 128
-dx = (xmax-xmin)/(numpoints - 1)
-dy = (ymax-ymin)/(numpoints - 1)
-sampled_data = np.zeros((nx, ny))
-xarr = np.zeros(nx)
-yarr = np.zeros(ny)
+n_x = 128
+n_y = 128
+dx = (xmax-xmin)/(n_x - 1)
+dy = (ymax-ymin)/(n_y - 1)
+sampled_data = np.zeros((n_x, n_y))
+xarr = np.zeros(n_x)
+yarr = np.zeros(n_y)
 for i in range(numpoints):
     for j in range(numpoints):
      sampled_data[i] [j] = f(xmin+i*dx, ymin+j*dy)
@@ -26,9 +26,9 @@ kxarr = 2*np.pi*kxarr
 kyarr = 2*np.pi*kyarr
 factor = np.exp(-1j * kxarr * xmin)* np.exp(-1j * kyarr * ymin)
 aft =dy* dx * np.sqrt(numpoints/(2.0*np.pi))* np.sqrt(numpoints/(2.0*np.pi)) * factor * nft  
-X,Y=np.meshgrid(kxarr, kyarr)
-Z=np.abs(aft)
+M,N=np.meshgrid(kxarr, kyarr)
+P=np.abs(aft)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.plot_wireframe(X, Y, Z)
+ax.plot_wireframe(M, N, P)
 plt.show()
