@@ -1,0 +1,20 @@
+import numpy as np
+import matplotlib.pyplot as plt
+def f(x):
+  return np.exp(-x*x)
+xmin = -5.0
+xmax = 5.0
+numpoints = 128
+dx = (xmax-xmin)/(numpoints - 1)
+sampled_data = np.zeros(numpoints)
+xarr = np.zeros(numpoints)
+for i in range(numpoints):
+  sampled_data[i] = f(xmin+i*dx)
+  xarr[i] = xmin+i*dx
+nft = np.fft.fft(sampled_data, norm='ortho') 
+karr = np.fft.fftfreq(numpoints, d=dx)
+karr = 2*np.pi*karr
+factor = np.exp(-1j * karr * xmin)
+aft = dx * np.sqrt(numpoints/(2.0*np.pi)) * factor * nft  
+plt.plot(karr, aft, "r^" )
+plt.plot(xarr, sampled_data)
