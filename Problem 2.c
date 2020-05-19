@@ -19,23 +19,16 @@ double analy(double x)
 	else
 		return 0.0;
 }
-
-
-
-
-
 int main()
 { 
-	int i;
-	double x_min=-30,x_max=30,dx;
-	double ft[num],k[num],tru[num];
-	fftw_complex in[num], out[num];
-	fftw_plan p;
-	p=fftw_plan_dft_1d(num,in,out,FFTW_FORWARD,FFTW_ESTIMATE);
-	
-	dx=(x_max-x_min)/(double)(num-1);
-
-	for (i=0;i<num;i++)
+   int i;
+   double x_min=-30,x_max=30,dx;
+   double ft[num],k[num],tru[num];
+   fftw_complex in[num], out[num];
+   fftw_plan p;
+   p=fftw_plan_dft_1d(num,in,out,FFTW_FORWARD,FFTW_ESTIMATE);
+   dx=(x_max-x_min)/(double)(num-1);
+   for (i=0;i<num;i++)
 	{	if(i<num/2){
 			k[i]=PI*2.0*(double)i/(double)num/dx;}
 		else
@@ -43,11 +36,11 @@ int main()
 		in[i][0]=f(x_min+dx*(double)i);
 		in[i][1]=0.0;}
 
-	FILE*file;
-	file = fopen("output.txt","w");
-	fftw_execute(p); 
+   FILE*file;
+   file = fopen("output.txt","w");
+   fftw_execute(p); 
 
-	for(i=0;i<num;i++) 
+    for(i=0;i<num;i++) 
 	{ 
 		ft[i]=dx*sqrt(1.0/(2.0*PI))*(cos(-x_min*k[i])*out[i][0]-sin(-x_min*k[i])*out[i][1]);
 		tru[i]=analy(k[i]);
@@ -59,9 +52,9 @@ int main()
 		{
 		fprintf(file,"%f, %f, %f\n", k[i],ft[i],tru[i]);}
 		
-	fclose(file);
-	fftw_destroy_plan(p);
-	return 0;
+    fclose(file);
+    fftw_destroy_plan(p);
+    return 0;
 }
 
 
